@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css    ">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 10px">
+            <div class="container-fluid">
+                <a class="navbar-brand" th:href="@{'/'}">KCMK</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{'/'}" style="color: #007bff">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{'/cart'}" style="color: #dc3545">View Cart</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-sm-2">
+                <form th:action="@{/product}" method="post">
+                    <div class="categories">
+                        <h5 class="font-weight-bold">Categories</h5>
+                        <div class="form-check">
+                            <input name="categoriesCheck" class="form-check-input" type="checkbox" value="phone" id="checkPhone">
+                            <label class="form-check-label" for="checkPhone"> Phone </label>
+                        </div>
+                        <div class="form-check">
+                            <input name="categoriesCheck" class="form-check-input" type="checkbox" value="TV" id="checkTV">
+                            <label class="form-check-label" for="checkTV"> TV </label>
+                        </div>
+                        <div class="form-check">
+                            <input name="categoriesCheck" class="form-check-input" type="checkbox" value="Laptop" id="checkLaptop">
+                            <label class="form-check-label" for="checkLaptop"> Laptop </label>
+                        </div>
+                        <div class="form-check">
+                            <input name="categoriesCheck" class="form-check-input" type="checkbox" value="Fridge" id="checkFridge">
+                            <label class="form-check-label" for="checkFridge"> Fridge </label>
+                        </div>
+                    </div>
+                    <div class="brand">
+                        <h5 class="font-weight-bold">Brand</h5>
+                        <div class="form-check form-switch">
+                            <input name="brandCheck" class="form-check-input" type="checkbox" role="switch" id="checkApple" value="Apple">
+                            <label class="form-check-label" for="checkApple">Apple</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input name="brandCheck" class="form-check-input" type="checkbox" role="switch" id="checkSamSung" value="Samsung">
+                            <label class="form-check-label" for="checkSamSung">Samsung</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input name="brandCheck" class="form-check-input" type="checkbox" role="switch" id="checkPanasonic" value="Panasonic">
+                            <label class="form-check-label" for="checkPanasonic">Panasonic</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input name="brandCheck" class="form-check-input" type="checkbox" role="switch" id="checkLG" value="LG">
+                            <label class="form-check-label" for="checkLG">LG</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input name="brandCheck" class="form-check-input" type="checkbox" role="switch" id="checkXiaomi" value="Xiaomi">
+                            <label class="form-check-label" for="checkXiaomi">Xiaomi</label>
+                        </div>
+                    </div>
+                    <div class="price">
+                        <h5 class="font-weight-bold">Price</h5>
+                        <div class="form-group">
+                            <label for="inputMinPrice">Min</label>
+                            <input type="number" name="minPrice" class="form-control" id="inputMinPrice" placeholder="0đ">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputMaxPrice">Max</label>
+                            <input type="number" name="maxPrice" class="form-control" placeholder="100.000.000đ" id="inputMaxPrice" >
+                        </div>
+                    </div>
+                    <div class="color">
+                        <h5 class="font-weight-bold">Color</h5>
+                        <div class="form-check">
+                            <input name="colorCheck" class="form-check-input" type="checkbox" value="black" id="checkBlack">
+                            <label class="form-check-label" for="checkBlack">
+                                <span> Black </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input name="colorCheck" class="form-check-input" type="checkbox" value="white" id="checkWhite">
+                            <label class="form-check-label" for="checkWhite">
+                                <span> White </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input name="colorCheck" class="form-check-input" type="checkbox" value="red" id="checkRed">
+                            <label class="form-check-label" for="checkRed">
+                                <span> Red </span>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input name="colorCheck" class="form-check-input" type="checkbox" value="blue" id="checkBlue">
+                            <label class="form-check-label" for="checkBlue">
+                                <span> Blue </span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="width: 100%">Filter</button>
+                    <a th:href="@{/}">
+                        <button type="button" class="btn btn-danger" style="width: 100%; margin-top:10px">Back to home</button>
+                    </a>
+                </form>
+            </div>
+            <div class="col-sm-10 mt-2" >
+                <form th:action="@{/productName}" method="post" class="d-flex">
+                    <input name="nameProductSearch" class="form-control me-2" type="search" placeholder="Search by name product" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <h5 style="margin-top: 10px"> Best seller Products: </h5>
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col-4" th:each="product: ${listProduct}" style="margin-bottom:10px">
+                        <th:block th:if="${listProduct.isEmpty()}">
+                            <p class="fw-bold">Empty product solved</p>
+                        </th:block>
+                        <div class="card" style="width: 18rem;">
+                            <img th:src="${product.imageSrc}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.name}"></h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Category: <span th:text="${product.category}"></span></li>
+                                    <li class="list-group-item">Brand: <span th:text="${product.brand}"></span></li>
+                                    <li class="list-group-item">Color: <span th:text="${product.color}"></span></li>
+                                    <li class="list-group-item">Price: <span th:text="${#strings.replace(#strings.replace(#numbers.formatDecimal(product.getPrice(), 0, 'COMMA', 2, 'POINT'), '.00', ''), ',', '.')} + đ"></span></li>
+                                </ul>
+                                <div class="d-flex align-items-center" style="justify-content: space-between">
+                                    <a th:href="@{'detail/' + ${product.id}}" class="card-link primary">View detail</a>
+                                    <form th:action="@{/cart}" method="post">
+                                        <input type="hidden" name="productId" th:value="${product.id}">
+                                        <input type="hidden" name="quantity" th:value="1">
+                                        <input type="hidden" name="unitPrice" th:value="${product.price}">
+                                        <button type="submit" class="btn btn-link" style="color: #dc3545">Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="text-center text-lg-start text-dark" style="background-color: #f8f9fa">
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)" >
+            © 2023 Copyright:
+            <a class="text-dark">KieuCaoMinhKiet</a>
+        </div>
+        </footer>
+    </div>
+</body>
+</html>

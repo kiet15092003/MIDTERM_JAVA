@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 10px">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{'/'}">KCMK</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{'/'}" style="color: #007bff">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{'/cart'}" style="color: #dc3545">View Cart</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<section class="h-100 h-custom" style="background-color: #eee;">
+    <div class="container h-100 py-5">
+        <div class="row d-flex">
+            <a th:href="@{'/'}">
+                <div>
+                    <i class="fa fa-solid fa-arrow-left"></i>
+                    <span> Back to shopping </span>
+                </div>
+            </a>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+                <div class="card shopping-cart" style="border-radius: 15px;">
+                    <div class="card-body text-black">
+                        <div class="row">
+                            <div class="col-lg-6 px-5 py-4">
+                                <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">Your products</h3>
+                                <div class="d-flex align-items-center mb-5"  th:each="product, index:${productList}">
+                                    <div class="flex-shrink-0">
+                                        <img th:src="${product.imageSrc}"
+                                             class="img-fluid" style="width: 150px;" alt="Generic placeholder image">
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <h5 class="text-primary" th:text="${product.name}"></h5>
+                                        <h6 style="color: #9e9e9e;">Color: <span th:text="${product.color}"></span></h6>
+                                        <div class="d-flex align-items-center" th:with="cart=${cartList}">
+                                            <p class="fw-bold mb-0 me-5 pe-3" style="margin-right: 10px"
+                                               th:text="${#strings.replace(#strings.replace(#numbers.formatDecimal(cart[__${index.index}__].getUnitPrice(), 0, 'COMMA', 2, 'POINT'), '.00', ''), ',', '.')} + 'đ'">
+                                            </p>
+                                            <div class="d-flex align-items-center">
+                                                <a th:href="@{'cart/minus/'+ ${product.getId()}}" class="text-decoration-none text-dark">
+                                                    <i class="fa fa-solid fa-minus"></i>
+                                                </a>
+                                                <span th:text="${cart[__${index.index}__].getQuantity()}" style="margin-left: 10px; margin-right: 10px"></span>
+                                                <a th:href="@{'cart/add/'+ ${product.getId()}}" class="text-decoration-none text-dark">
+                                                    <i class="fa fa-solid fa-plus"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <a th:href="@{'cart/remove/'+${product.getId()}}" style="flex:end">
+                                            <button type="button" class="btn btn-danger">Remove</button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr class="mb-4" style="height: 2px; background-color: #1266f1; opacity: 1;">
+                                <div class="d-flex justify-content-between p-2 mb-2" style="background-color: #e1f5fe;" >
+                                    <h5 class="fw-bold mb-0">Total:</h5>
+                                    <h5 class="fw-bold mb-0"
+                                        th:text="${totalPrice}? ${#strings.replace(#strings.replace(#numbers.formatDecimal(totalPrice, 0, 'COMMA', 2, 'POINT'), '.00', ''), ',', '.')} + 'đ' : '0đ'">
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 px-5 py-4">
+                                <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">Payment</h3>
+                                <form th:action="@{/invoice}" class="mb-5" method="post">
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="phoneNumber">Phone Number</label>
+                                        <input name="phoneNumber" type="text" id="phoneNumber" class="form-control" size="17"
+                                               minlength="11" maxlength="11" />
+                                    </div>
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="CustomerName">Customer Name</label>
+                                        <input name="customerName" type="text" id="CustomerName" class="form-control" size="17"/>
+                                    </div>
+                                    <div class="form-outline mb-2">
+                                        <label class="form-label" for="CustomerAddress">Customer Address</label>
+                                        <input name="customerAddress" type="text" id="CustomerAddress" class="form-control" size="17"/>
+                                    </div>
+                                    <p class="mb-5">Please confirm that you will definitely receive the order and pay the full order amount</p>
+                                    <button type="submit" class="btn btn-primary btn-block btn-lg">Buy now</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="text-center text-lg-start text-dark" style="background-color: #f8f9fa">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)" >
+        © 2023 Copyright:
+        <a class="text-dark">KieuCaoMinhKiet</a>
+    </div>
+</footer>
+</body>
+</html>
